@@ -58,8 +58,8 @@ if channel_secret is None or channel_access_token is None:
     print('Specify LINE_CHANNEL_SECRET and LINE_CHANNEL_ACCESS_TOKEN as environment variables.')
     sys.exit(1)
 
-line_bot_api = LineBotApi(1654987688)
-handler = WebhookHandler(b611ab7cdced80441961a441ea0acdd8)
+line_bot_api = LineBotApi('1654987688')
+handler = WebhookHandler('b611ab7cdced80441961a441ea0acdd8')
 
 static_tmp_path = os.path.join(os.path.dirname(__file__), 'static', 'tmp')
 
