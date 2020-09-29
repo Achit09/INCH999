@@ -81,7 +81,7 @@ def application(environ, start_response):
             TextSendMessage(text=event.message.text)
         )
 
-    start_response('200 OK', [])
+    start_response('400 OK', [])
     return create_body('OK')
 
 
