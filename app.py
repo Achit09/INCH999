@@ -78,27 +78,34 @@ def handle_msg_img(event):
 @handler.add(MessageEvent, message=TextMessage)
 def handle_msg_text(event):
     content = event.message.text  
-    if event.message.text == 'ts':
+    if event.message.text == 'r':
         buttonsTemplate = TemplateSendMessage(
                 alt_text='The template',
                 template=ButtonsTemplate(
-                    title='目前主題為',
+                    title='你選吧！',
                     text= content,
     #                thumbnail_image_url= imgur_ran(),
                     actions=[
                         MessageTemplateAction(
-                            label='修改主題',
-                            text='修改主題'
+                            label='Microchip',
+                            text='Microchip'
                         ),
                     MessageTemplateAction(
-                            label='imgur scrap',
-                            text='imgur scrap'
+                            label='Infineon',
+                            text='Infineon'
+                        ),
+                    MessageTemplateAction(
+                            label='包裝種類',
+                            text='包裝種類'
                         )
                     ]
                 )
             )
             # message = TextSendMessage(text=content)
         line_bot_api.reply_message(event.reply_token,buttonsTemplate)
+
+    elif event.message.text == "":
+        line_bot_api.reply_message(event.reply_token,content)
 
 if __name__ == "__main__":
     app.run()
