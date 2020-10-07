@@ -79,7 +79,7 @@ def handle_msg_img(event):
 def handle_msg_text(event):
     content = event.message.text  
     if event.message.text == 'ts':
-            buttonsTemplate = TemplateSendMessage(
+        buttonsTemplate = TemplateSendMessage(
                 alt_text='The template',
                 template=ButtonsTemplate(
                     title='目前主題為',
@@ -98,7 +98,7 @@ def handle_msg_text(event):
                 )
             )
             # message = TextSendMessage(text=content)
-    line_bot_api.reply_message(event.reply_token,buttonsTemplate)
+        line_bot_api.reply_message(event.reply_token,buttonsTemplate)
 
 if __name__ == "__main__":
     app.run()
