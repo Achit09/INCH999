@@ -64,24 +64,29 @@ def MCHP(result):
 
 #IFX查價格
 def Infineon(result):
-    src = requests.get("https://www.infineon.com/shop/products/pricing-availability/"+result)
+    #查OPN
+    src = requests.get("https://www.infineon.com/products/opn/opnTranslator?term="+result+"&offset=0&max_results=2147483647&lang=en")
     data = json.loads(src.text)
-    clist = data["ProductInfo"]
-    CPN = clist["ManufacturerPartNumber"]
+    clist = data["opnJsonFragment_ps"]
+    # print (clist)
+    fullopn = clist[0]["opn"]
+    #查價格
+    src = requests.get("https://www.infineon.com/shop/products/pricing-availability/"+fullopn)
+    data = json.loads(src.text)
     # ProductFamily = clist["ProductFamily"]
-    IspnName = clist["IspnName"]
     for PB in clist["PriceBreaks"]:
         price = float((PB['Price'])*0.9)
     price = round(price,2)
-    content = ( str(IspnName)+"\n"+str(CPN) +"  "+"$"+str(price))
+    content = ( str(fullopn)+"\n"+"  "+"$"+str(price))
     return content
+
 
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     # line_bot_api.reply_message(event.reply_token,TextSendMessage(text= "稍等，搜尋中"))
     result = event.message.text
-    content = MCHP(result)
+    content = Infineon(result)
     line_bot_api.reply_message(event.reply_token,TextSendMessage(text= content))
 
 
