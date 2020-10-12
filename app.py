@@ -71,10 +71,10 @@ def Infineon(result):
     # print (clist)
     fullopn = clist[0]["opn"]
     #查價格
-    src = requests.get("https://www.infineon.com/shop/products/pricing-availability/"+fullopn)
-    data = json.loads(src.text)
-    # ProductFamily = clist["ProductFamily"]
-    for PB in clist["PriceBreaks"]:
+    src1 = requests.get("https://www.infineon.com/shop/products/pricing-availability/"+fullopn)
+    data1 = json.loads(src1.text)
+    clist1 = data1["ProductInfo"]
+    for PB in clist1["PriceBreaks"]:
         price = float((PB['Price'])*0.9)
     price = round(price,2)
     content = ( str(fullopn)+"\n"+"  "+"$"+str(price))
