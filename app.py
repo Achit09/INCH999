@@ -77,7 +77,7 @@ def Infineon(result):
     for PB in clist1["PriceBreaks"]:
         price = float((PB['Price'])*0.9)
     price = round(price,2)
-    content = ( str(fullopn)+"\n"+"  "+"$"+str(price))
+    content = ( str(fullopn)+"  "+"$"+str(price))
     return content
 
 
