@@ -41,7 +41,7 @@ def callback():
         print("Catch exception from LINE Messaging API: %s\n" % e.message)
         for m in e.error.details:
             print("ERROR is %s: %s" % (m.property, m.message))
-            line_bot_api.reply_message(event.reply_token,TextSendMessage(text= "ERROR"))
+            line_bot_api.reply_message(event.reply_token,TextSendMessage("ERROR"))
         print("\n")
 
     except InvalidSignatureError:
