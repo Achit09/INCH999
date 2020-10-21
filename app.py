@@ -87,8 +87,13 @@ def Infineon(result):
 def handle_message(event):
     # line_bot_api.reply_message(event.reply_token,TextSendMessage(text= "稍等，搜尋中"))
     result = event.message.text
-    content = Infineon(result)
-    line_bot_api.reply_message(event.reply_token,TextSendMessage(text= content))
+    try:
+        content = Infineon(result)
+    except json.decoder.JSONDecodeError:
+        content = "查詢失敗"
+    finally:
+        line_bot_api.reply_message(event.reply_token,TextSendMessage(text= content))
+
 
 
 if __name__ == "__main__":
