@@ -2,6 +2,7 @@
 import os
 import requests
 import json
+from bs4 import BeautifulSoup
 
 from flask import Flask, request, abort
 
@@ -50,17 +51,34 @@ def callback():
     return 'OK'
 
 #MCHP查價格
-def MCHP(result):
-    src = requests.get("https://www.microchipdirect.com/api/Product/ProductInfo?CPN="+result)
-    data = json.loads(src.text)
-    clist = data["products"]
+def lcsc(result):
+    # src = requests.get("https://www.microchipdirect.com/api/Product/ProductInfo?CPN="+result)
+    # data = json.loads(src.text)
+    # clist = data["products"]
+    # content = ""
+    # for CPN in clist:
+    #     repons = (CPN["CPN"])
+    #     repons2 = CPN["BusinessPricingInfo"]
+    #     for Value in repons2:
+    #         Price = Value["Value"]
+    #     content += str(repons)+("  ")+str(Price)+("\n")
+
+    src = requests.get("https://so.szlcsc.com/global.html?k="+result)
+    soup = BeautifulSoup(src.text,"lxml")
+
+    # t1 = soup.find_all('table')
+    names = soup.find_all(class_="two")
+    price = soup.find_all(class_="price-warp")
+    contentA = ""
+    contentB = ""
     content = ""
-    for CPN in clist:
-        repons = (CPN["CPN"])
-        repons2 = CPN["BusinessPricingInfo"]
-        for Value in repons2:
-            Price = Value["Value"]
-        content += str(repons)+("  ")+str(Price)+("\n")
+
+    for name in names:
+        contentA += (name.select_one("a").text.split())
+    for prices in price:
+        contentB += (prices.select_one("p").text.split() + prices.select_one("span").text.split())
+    content += str(contentA)+str(contentB) 
+
     return content
 
 #IFX查價格
@@ -88,7 +106,7 @@ def handle_message(event):
     # line_bot_api.reply_message(event.reply_token,TextSendMessage(text= "稍等，搜尋中"))
     result = event.message.text
     try:
-        content = Infineon(result)
+        content = lcsc(result)
     except json.decoder.JSONDecodeError:
         content = "查詢失敗"
     finally:

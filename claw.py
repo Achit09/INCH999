@@ -1,24 +1,42 @@
 import json
 import requests
+from bs4 import BeautifulSoup
+
 
 print ("請務必輸入完整OPN(EX:ICE2PCS01GXUMA1)")
 res = input("輸入商品名稱：")
 
+
+# 加入使用者資訊(如使用什麼瀏覽器、作業系統...等資訊)模擬真實瀏覽網頁的情況
+headers = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 \
+                        (KHTML, like Gecko) Chrome/60.0.3112.50 Safari/537.36'}
+
 try:
-    src = requests.get("https://www.infineon.com/products/opn/opnTranslator?term="+res+"&offset=0&max_results=2147483647&lang=en")
-    data = json.loads(src.text)
-    clist = data["opnJsonFragment_ps"]
-    # print (clist)
-    fullopn = clist[0]["opn"]
-   
+    src = requests.get("https://so.szlcsc.com/global.html?k="+res, headers = headers)
+    soup = BeautifulSoup(src.text,"lxml")
+
+    # t1 = soup.find_all('table')
+    names = soup.find_all(class_="two")
+    price = soup.find_all(class_="price-warp")
+    # print (soup)
+    # names = soup.find_all('class_="two"')
+    # for name in names:
+    #     print(name.select_one("a").string)
+
+    # print (price)
+
+    # for name in names:
+    #     print(name.select_one("a").text.split())
+    #     for prices in price:
+    #         print(prices.select_one("span").text.split())
+    #         continue
+
+    for name in names:
+        print(name.select_one("a").text.split())
+    for prices in price:
+        print(prices.select_one("p").text.split() + prices.select_one("span").text.split())
+
+
 
 except json.decoder.JSONDecodeError:
     print(res,"查詢失敗，請輸入正確OPN")
-
-    # ProductFamily = clist["ProductFamily"]
-    # IspnName = clist["IspnName"]
-    # for PB in clist["PriceBreaks"]:
-    #     price = float((PB['Price'])*0.9)
-    # price = round(price,2)
-    # content = ( str(IspnName)+"\n"+str(CPN) +"  "+"$"+str(price))
-    # return content
