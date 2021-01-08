@@ -3,6 +3,7 @@ import os
 import requests
 import json
 from bs4 import BeautifulSoup
+import pandas as pd
 
 from flask import Flask, request, abort
 
@@ -60,7 +61,7 @@ def lcsc(result):
     bandsName = list()
     prices = list()
     content = list()
-    
+
     for name in names:
         ProductName.append(name.select_one("a").text.split())
    
