@@ -63,7 +63,8 @@ def lcsc(result):
     for name in names:
         ProductName.append(name.select_one("a").text.split())
     for prices in price:
-        Price.append(prices.select_one("p").text.split() + prices.select_one("span").text.split())
+        # Price.append(prices.select_one("p").text.split() + prices.select_one("span").text.split())
+        Price.append(prices.select_one("span").text.split())
     content = (str(ProductName)+ str(Price))
     return content
 
