@@ -52,34 +52,25 @@ def callback():
 
 #MCHP查價格
 def lcsc(result):
-    # src = requests.get("https://www.microchipdirect.com/api/Product/ProductInfo?CPN="+result)
-    # data = json.loads(src.text)
-    # clist = data["products"]
-    # content = ""
-    # for CPN in clist:
-    #     repons = (CPN["CPN"])
-    #     repons2 = CPN["BusinessPricingInfo"]
-    #     for Value in repons2:
-    #         Price = Value["Value"]
-    #     content += str(repons)+("  ")+str(Price)+("\n")
-
     src = requests.get("https://so.szlcsc.com/global.html?k="+result)
     soup = BeautifulSoup(src.text,"lxml")
 
     # t1 = soup.find_all('table')
     names = soup.find_all(class_="two")
     price = soup.find_all(class_="price-warp")
-    contentA = ""
-    contentB = ""
-    content = ""
-
+    ProductName = list()
+    Price = list()
     for name in names:
-        contentA += (name.select_one("a").text.split())
+        ProductName.append(name.select_one("a").text.split())
     for prices in price:
-        contentB += (prices.select_one("p").text.split() + prices.select_one("span").text.split())
-    content += str(contentA)+str(contentB) 
-
-    return content
+        Price.append(prices.select_one("p").text.split() + prices.select_one("span").text.split())
+        # Price.append(prices.select_one("span").text.split())
+    # print(pd.DataFrame({
+    #         '編號':ProductName,
+    #         '價格':Price
+    #         }))
+    content = (ProductName, Price)
+    print (content)
 
 #IFX查價格
 def Infineon(result):

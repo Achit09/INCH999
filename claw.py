@@ -1,6 +1,7 @@
 import json
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
 
 
 print ("請務必輸入完整OPN(EX:ICE2PCS01GXUMA1)")
@@ -18,25 +19,20 @@ try:
     # t1 = soup.find_all('table')
     names = soup.find_all(class_="two")
     price = soup.find_all(class_="price-warp")
-    # print (soup)
-    # names = soup.find_all('class_="two"')
-    # for name in names:
-    #     print(name.select_one("a").string)
-
-    # print (price)
-
-    # for name in names:
-    #     print(name.select_one("a").text.split())
-    #     for prices in price:
-    #         print(prices.select_one("span").text.split())
-    #         continue
-
+    ProductName = list()
+    Price = list()
     for name in names:
-        print(name.select_one("a").text.split())
+        ProductName.append(name.select_one("a").text.split())
     for prices in price:
-        print(prices.select_one("p").text.split() + prices.select_one("span").text.split())
-
-
+        Price.append(prices.select_one("p").text.split() + prices.select_one("span").text.split())
+        # Price.append(prices.select_one("span").text.split())
+    # print(pd.DataFrame({
+    #         '編號':ProductName,
+    #         '價格':Price
+    #         }))
+    content = (ProductName, Price)
+    print (content)
+    
 
 except json.decoder.JSONDecodeError:
     print(res,"查詢失敗，請輸入正確OPN")
