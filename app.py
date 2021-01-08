@@ -69,7 +69,7 @@ def lcsc(result):
     #         '編號':ProductName,
     #         '價格':Price
     #         }))
-    content = (ProductName, Price)
+    content = str(ProductName)+ str(Price)
     return content
 
 #IFX查價格

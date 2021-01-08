@@ -30,7 +30,7 @@ try:
     #         '編號':ProductName,
     #         '價格':Price
     #         }))
-    content = (ProductName, Price)
+    content = str(ProductName)+ str(Price)
     print (content)
     
 
