@@ -24,8 +24,6 @@ SECRET = os.environ.get('SECRET')
 line_bot_api = LineBotApi(ACCESS_TOKEN)
 handler = WebhookHandler(SECRET)
 
-content = list()
-
 @app.route("/callback", methods=['POST'])
 def callback():
     # get X-Line-Signature header value
@@ -66,7 +64,7 @@ def lcsc(result):
         ProductName.append(name.select_one("a").text.split())
     for prices in price:
         Price.append(prices.select_one("p").text.split() + prices.select_one("span").text.split())
-    content = str(ProductName)+ str(Price)
+    content = (str(ProductName)+ str(Price))
     return content
 
 #IFX查價格
