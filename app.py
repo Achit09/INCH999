@@ -70,7 +70,7 @@ def lcsc(result):
     #         '價格':Price
     #         }))
     content = (ProductName, Price)
-    print (content)
+    return content
 
 #IFX查價格
 def Infineon(result):
