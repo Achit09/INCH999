@@ -62,10 +62,15 @@ def lcsc(result):
     
     for name in names:
         ProductName.append(name.select_one("a").text.split())
-    for prices in price:
-        # Price.append(prices.select_one("p").text.split() + prices.select_one("span").text.split())
-        Price.append(prices.select_one("span").text.split())
-    content = (str(ProductName)+ str(Price))
+   
+    for band in soup.find_all(class_="brand-name"):
+        bandsName.append(band.text.split())
+
+    content = pd.DataFrame({
+            '產品名稱':ProductName,
+            '廠牌':bandsName,
+            })
+            
     return content
 
 #IFX查價格
