@@ -25,11 +25,7 @@ try:
         ProductName.append(name.select_one("a").text.split())
     for prices in price:
         Price.append(prices.select_one("p").text.split() + prices.select_one("span").text.split())
-        # Price.append(prices.select_one("span").text.split())
-    # print(pd.DataFrame({
-    #         '編號':ProductName,
-    #         '價格':Price
-    #         }))
+
     content = str(ProductName)+ str(Price)
     print (content)
     

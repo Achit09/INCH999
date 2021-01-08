@@ -24,6 +24,7 @@ SECRET = os.environ.get('SECRET')
 line_bot_api = LineBotApi(ACCESS_TOKEN)
 handler = WebhookHandler(SECRET)
 
+content = list()
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -60,15 +61,11 @@ def lcsc(result):
     price = soup.find_all(class_="price-warp")
     ProductName = list()
     Price = list()
+    
     for name in names:
         ProductName.append(name.select_one("a").text.split())
     for prices in price:
         Price.append(prices.select_one("p").text.split() + prices.select_one("span").text.split())
-        # Price.append(prices.select_one("span").text.split())
-    # print(pd.DataFrame({
-    #         '編號':ProductName,
-    #         '價格':Price
-    #         }))
     content = str(ProductName)+ str(Price)
     return content
 
