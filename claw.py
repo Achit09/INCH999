@@ -35,8 +35,8 @@ try:
             'bandsName':bandsName,
             })
 
-    content = dataframe.head(3)
-
+    content = dataframe.head(3).to_string
+    print(content)
 
     print("花費：" + str(time.time() - start_time) + "秒")
     
