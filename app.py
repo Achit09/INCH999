@@ -72,7 +72,7 @@ def lcsc(result):
             '廠牌':bandsName,
             })
 
-    content = dataframe.head(3).to_string
+    content = str(dataframe.head(5))
 
     return content
 
