@@ -55,24 +55,32 @@ def lcsc(result):
     src = requests.get("https://so.szlcsc.com/global.html?k="+result)
     soup = BeautifulSoup(src.text,"lxml")
 
-    # t1 = soup.find_all('table')
     names = soup.find_all(class_="two")
-    ProductName = list()
-    bandsName = list()
+    price = soup.find_all(class_='ccd ccd-ppbbz',attrs={"data-startpurchasednumber":"1"})
+    bands = soup.find_all(class_="brand-name")
+    ProductNamelist = list()
+    bandsNamelist = list()
+    priceslist = list()
     content = list()
+    # 取得搜尋數量 & 細節
+    # print (price)
 
+    for prices in price:
+        priceslist.append(prices.text.split())
+        
     for name in names:
-        ProductName.append(name.select_one("a").text.split())
+        ProductNamelist.append(name.select_one("a").text.split())
    
     for band in soup.find_all(class_="brand-name"):
-        bandsName.append(band.text.split())
+        bandsNamelist.append(band.text.split())
 
     dataframe = pd.DataFrame({
-            '產品名稱':ProductName,
-            '廠牌':bandsName,
+            'ProductName':ProductNamelist,
+            'bandsName':bandsNamelist,
+            'priceslist':priceslist,
             })
 
-    content = str(dataframe.head(5))
+    content = str(dataframe.head(20))
 
     return content
 

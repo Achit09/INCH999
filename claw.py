@@ -17,25 +17,31 @@ try:
     src = requests.get("https://so.szlcsc.com/global.html?k="+res)
     soup = BeautifulSoup(src.text,"lxml")
     names = soup.find_all(class_="two")
-    price = soup.find_all(class_="price-warp")
+    price = soup.find_all(class_='ccd ccd-ppbbz',attrs={"data-startpurchasednumber":"1"})
     bands = soup.find_all(class_="brand-name")
-    ProductName = list()
-    bandsName = list()
-    prices = list()
+    ProductNamelist = list()
+    bandsNamelist = list()
+    priceslist = list()
     content = list()
     # 取得搜尋數量 & 細節
+    # print (price)
+
+    for prices in price:
+        priceslist.append(prices.text.split())
+        
     for name in names:
-        ProductName.append(name.select_one("a").text.split())
+        ProductNamelist.append(name.select_one("a").text.split())
    
     for band in soup.find_all(class_="brand-name"):
-        bandsName.append(band.text.split())
+        bandsNamelist.append(band.text.split())
 
     dataframe = pd.DataFrame({
-            'ProductName':ProductName,
-            'bandsName':bandsName,
+            'ProductName':ProductNamelist,
+            'bandsName':bandsNamelist,
+            'priceslist':priceslist,
             })
 
-    content = str(dataframe.head(5))
+    content = str(dataframe.head(20))
 
     print(content)
 
