@@ -31,11 +31,12 @@ try:
         bandsName.append(band.text.split())
 
     dataframe = pd.DataFrame({
-            '產品名稱':ProductName,
-            '廠牌':bandsName,
+            'ProductName':ProductName,
+            'bandsName':bandsName,
             })
 
-    print (dataframe)
+    content = dataframe.head(3)
+
 
     print("花費：" + str(time.time() - start_time) + "秒")
     
